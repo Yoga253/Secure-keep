@@ -3,7 +3,7 @@
 {% block content %}
 <div class="auth-card">
     <h2>Two-Factor Authentication</h2>
-    <p>Please enter the 6-digit code displayed in the server console.</p>
+    <p>Please enter the 6-digit code sent to your email.</p>
     <form action="{{ url_for('otp_verify') }}" method="POST">
         <div class="form-group">
             <label>OTP Code</label>

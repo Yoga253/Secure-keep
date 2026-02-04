@@ -1,0 +1,104 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="card">
+    <h2>Access Control Matrix</h2>
+    <p>This table defines the permissions for each role (Subject) against system resources (Objects).</p>
+
+    <table class="acl-table">
+        <thead>
+            <tr>
+                <th>Subject \ Object</th>
+                <th>Notes (Own)</th>
+                <th>Notes (All)</th>
+                <th>User Management</th>
+                <th>System Logs</th>
+                <th>ACL Matrix</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>USER</strong></td>
+                <td class="allowed">Read/Write/Delete</td>
+                <td class="denied">Denied</td>
+                <td class="denied">Denied</td>
+                <td class="denied">Denied</td>
+                <td class="allowed">Read</td>
+            </tr>
+            <tr>
+                <td><strong>MANAGER</strong></td>
+                <td class="denied">Denied</td>
+                <td class="denied">Denied</td>
+                <td class="allowed">Read Only</td>
+                <td class="allowed">Read Only</td>
+                <td class="allowed">Read</td>
+            </tr>
+            <tr>
+                <td><strong>ADMIN</strong></td>
+                <td class="allowed">Read/Write/Delete</td>
+                <td class="allowed">Read All</td>
+                <td class="allowed">Full Control</td>
+                <td class="allowed">Read Only</td>
+                <td class="allowed">Read</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<style>
+    .acl-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    .acl-table th,
+    .acl-table td {
+        border: 1px solid var(--border-color);
+        padding: 12px;
+        text-align: center;
+    }
+
+    .acl-table th {
+        background-color: #f4f4f4;
+        font-weight: bold;
+    }
+
+    .acl-table tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    .allowed {
+        color: #137333;
+        font-weight: 500;
+    }
+
+    .denied {
+        color: #c5221f;
+        font-weight: 500;
+    }
+
+    /* Dark mode support */
+    body.dark-mode .acl-table th {
+        background-color: #444;
+        color: #fff;
+        border-color: #555;
+    }
+
+    body.dark-mode .acl-table td {
+        border-color: #555;
+    }
+
+    body.dark-mode .acl-table tr:nth-child(even) {
+        background-color: #3a3a3a;
+    }
+
+    body.dark-mode .allowed {
+        color: #81c995;
+    }
+
+    body.dark-mode .denied {
+        color: #f28b82;
+    }
+</style>
+{% endblock %}

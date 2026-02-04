@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="card">
+    <h2>System Logs</h2>
+    <p>Recent system activity and security events.</p>
+
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Timestamp</th>
+                <th>User</th>
+                <th>Action</th>
+                <th>Details</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for log in logs %}
+            <tr>
+                <td>{{ log.id }}</td>
+                <td>{{ log.timestamp }}</td>
+                <td>{{ log.username or 'System' }}</td>
+                <td><span class="badge">{{ log.action }}</span></td>
+                <td>{{ log.details }}</td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="5">No logs found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

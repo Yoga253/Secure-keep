@@ -41,6 +41,18 @@ def init_db():
                 FOREIGN KEY (user_id) REFERENCES users (id)
             )
         ''')
+
+        # Logs Table (3rd Object)
+        c.execute('''
+            CREATE TABLE IF NOT EXISTS logs (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                user_id INTEGER,
+                username TEXT,
+                action TEXT NOT NULL,
+                details TEXT,
+                timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+        ''')
         
         conn.commit()
         conn.close()
