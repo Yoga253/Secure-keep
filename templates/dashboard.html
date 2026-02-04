@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="dashboard-header">
+    <h1>Welcome, {{ user }}</h1>
+</div>
+
+<!-- Add Note Form -->
+<div class="note-input-container">
+    <form action="{{ url_for('add_note') }}" method="POST" class="note-form">
+        <input type="text" name="title" placeholder="Title" required class="note-title-input">
+        <textarea name="content" placeholder="Take a note..." required class="note-content-input"></textarea>
+        <div class="form-actions">
+            <button type="submit" class="btn-primary">Add Note</button>
+        </div>
+    </form>
+</div>
+
+<!-- Notes Grid -->
+<div class="notes-grid">
+    {% for note in notes %}
+    <div class="note-card">
+        <div class="note-card-header">
+            <h3>{{ note.title }}</h3>
+            <a href="{{ url_for('delete_note', note_id=note.id) }}" class="delete-btn" onclick="return confirm('Are you sure?')">&times;</a>
+        </div>
+        <div class="note-card-body">
+            <p>{{ note.content }}</p>
+        </div>
+        <div class="note-card-footer">
+            <span class="status-badge {{ 'valid' if note.status == 'Verified' else 'invalid' }}">
+                Status: {{ note.status }}
+            </span>
+            <span class="timestamp">{{ note.created_at }}</span>
+        </div>
+    </div>
+    {% else %}
+    <p class="no-notes">No notes yet.</p>
+    {% endfor %}
+</div>
+{% endblock %}

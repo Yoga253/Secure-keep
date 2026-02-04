@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Notes</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="brand">SecureKeep</div>
+        <div class="nav-links">
+            <a href="#" id="night-mode-toggle" title="Toggle Night Mode">🌙</a>
+            {% if session.get('user_id') %}
+                <span class="user-badge">{{ session.get('username') }} ({{ session.get('role') }})</span>
+                {% if session.get('role') == 'ADMIN' %}
+                    <a href="{{ url_for('admin_panel') }}">Admin Panel</a>
+                {% endif %}
+                <a href="{{ url_for('dashboard') }}">My Notes</a>
+                <a href="{{ url_for('logout') }}">Logout</a>
+            {% else %}
+                <a href="{{ url_for('login') }}">Login</a>
+                <a href="{{ url_for('register') }}">Register</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <div class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert {{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        
+        {% block content %}{% endblock %}
+    </div>
+
+    <script>
+        const toggleBtn = document.getElementById('night-mode-toggle');
+        const body = document.body;
+        
+        // Load preference
+        if (localStorage.getItem('night-mode') === 'enabled') {
+            body.classList.add('dark-mode');
+            toggleBtn.textContent = '☀️';
+        }
+
+        toggleBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            body.classList.toggle('dark-mode');
+            
+            if (body.classList.contains('dark-mode')) {
+                localStorage.setItem('night-mode', 'enabled');
+                toggleBtn.textContent = '☀️';
+            } else {
+                localStorage.setItem('night-mode', 'disabled');
+                toggleBtn.textContent = '🌙';
+            }
+        });
+    </script>
+</body>
+</html>
